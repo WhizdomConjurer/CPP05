@@ -6,7 +6,7 @@
 /*   By: puzzlesanalytik <puzzlesanalytik@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 17:27:39 by puzzlesanal       #+#    #+#             */
-/*   Updated: 2025/11/23 14:45:07 by puzzlesanal      ###   ########.fr       */
+/*   Updated: 2025/11/23 16:18:31 by puzzlesanal      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ public:
     class GradeTooLowException : public std::exception 
     {
         public:
-            virtual const char* what() const throw(); // niemals werfen
+        const char* what() const throw() override;// niemals werfen
     };
 
 private:

@@ -6,14 +6,15 @@
 /*   By: puzzlesanalytik <puzzlesanalytik@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 17:27:44 by puzzlesanal       #+#    #+#             */
-/*   Updated: 2025/11/11 19:08:22 by puzzlesanal      ###   ########.fr       */
+/*   Updated: 2025/11/23 17:08:36 by puzzlesanal      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
+#include "Form.hpp"
 
 //#####################################################################
-// ---- zentrale Validierung des Ranges -------------------------------
+// ---- zentrale Validierung des Ranges 
 //#####################################################################
 void Bureaucrat::validateGradeOrThrow(int grade) 
 {
@@ -22,7 +23,7 @@ void Bureaucrat::validateGradeOrThrow(int grade)
 }
 
 //####################################################################
-// ---- Konstruktoren / Canonical Form -------------------------------
+// ---- Konstruktoren / Canonical Form 
 //####################################################################
 
 // Haupt-Konstruktor: Name+Grade setzen und sofort validieren
@@ -54,14 +55,14 @@ Bureaucrat& Bureaucrat::operator=(Bureaucrat const& other)
 Bureaucrat::~Bureaucrat() {}
 
 //#####################################################################
-// ---- Getter --------------------------------------------------------
+// ---- Getter 
 //#####################################################################
 
 const std::string& Bureaucrat::getName() const { return _name; }
 int                Bureaucrat::getGrade() const { return _grade; }
 
 //#####################################################################
-// ---- Modifikatoren -------------------------------------------------
+// ---- Modifikatoren 
 //#####################################################################
 
 // increment: bessere Note = kleinere Zahl
@@ -90,7 +91,21 @@ const char* Bureaucrat::GradeTooLowException::what() const throw()
 }
 
 //#####################################################################
-// ---- Ausgabeoperator -----------------------------------------------
+// -------- ex01: signForm 
+//#####################################################################
+void Bureaucrat::signForm(Form& form) const
+{
+    try {
+        form.beSigned(*this);
+        std::cout << BRIGHT_GRN << _name << " signed " << form.getName() << RST << "\n";
+    } catch (const std::exception& e) {
+        std::cout << BRIGHT_RED << _name << " couldn't sign " << form.getName()
+                  << " because " << e.what() << RST << "\n";
+    }
+}
+
+//#####################################################################
+// ---- Ausgabeoperator --------
 //#####################################################################
 
 // Kein std::endl hier → Aufrufer entscheidet über Zeilenumbruch.

@@ -6,46 +6,51 @@
 #    By: puzzlesanalytik <puzzlesanalytik@studen    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/11 18:50:15 by puzzlesanal       #+#    #+#              #
-#    Updated: 2025/11/11 19:08:32 by puzzlesanal      ###   ########.fr        #
+#    Updated: 2025/11/23 17:13:47 by puzzlesanal      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # ex00/Makefile
 
-NAME     := bureaucrat
-CXX      := c++
-# Du kannst hier auf c++17 umschalten:  make STD=c++17
-STD      ?= c++98
-CXXFLAGS := -Wall -Wextra -Werror -std=$(STD)
+# ---------- Minimal, nicht relinkend, mit Farbe ----------
+NAME    := ex01
+CXX     := c++
+CXXFLAGS:= -Wall -Wextra -Werror -std=c++98
 
-SRC := main.cpp Bureaucrat.cpp
+SRC := \
+	Bureaucrat.cpp \
+	Form.cpp \
+	main.cpp
+
+INC := \
+	Bureaucrat.hpp \
+	Form.hpp \
+	colors.hpp
+
 OBJ := $(SRC:.cpp=.o)
 
 # Farben
-GRN := \033[32m
-YEL := \033[33m
-RED := \033[31m
-BLU := \033[34m
+GRN := \033[92m
+BLU := \033[94m
 RST := \033[0m
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@echo "$(BLU)[Link]$(RST) $@"
 	@$(CXX) $(CXXFLAGS) -o $@ $^
-	@echo "$(GRN)[OK]$(RST) Build complete → ./$(NAME)"
+	@echo "$(GRN)[OK]$(RST) linked $(NAME)"
 
-%.o: %.cpp Bureaucrat.hpp
-	@echo "$(YEL)[Compile]$(RST) $<"
+%.o: %.cpp $(INC)
 	@$(CXX) $(CXXFLAGS) -c $< -o $@
+	@echo "$(BLU)[CC]$(RST) $<"
 
 clean:
 	@rm -f $(OBJ)
-	@echo "$(RED)[Clean]$(RST) object files removed"
+	@echo "cleaned objects"
 
 fclean: clean
 	@rm -f $(NAME)
-	@echo "$(RED)[Clean]$(RST) binary removed"
+	@echo "removed binary"
 
 re: fclean all
 

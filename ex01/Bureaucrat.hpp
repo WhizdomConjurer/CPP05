@@ -6,7 +6,7 @@
 /*   By: puzzlesanalytik <puzzlesanalytik@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 17:27:39 by puzzlesanal       #+#    #+#             */
-/*   Updated: 2025/11/23 14:45:07 by puzzlesanal      ###   ########.fr       */
+/*   Updated: 2025/11/23 17:09:21 by puzzlesanal      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,30 +17,25 @@
 #include <iostream>
 #include <exception>
 
-/**
- * Klasse: Bureaucrat
- *  - _name:  konstante Identität (wird NIE geändert)
- *  - _grade: Rang [1..150], 1 = bester Rang, 150 = schlechtester Rang
- *
- * Lernziele:
- *  - Exceptions (eigene Klassen, what())
- *  - Invariante für _grade garantieren
- *  - Canonical Form (Ctor, Copy-Ctor, Operator=, Dtor)
- *  - Operator<< zur hübschen Ausgabe
- */
+// 42-Modul-Konvention: kleinste Zahl = höchster Rang (1), größte = nidrigster (150).
+static const int HIGHEST_GRADE = 1;
+static const int LOWEST_GRADE  = 150;
+
+class Form;
+
 class Bureaucrat 
 {
 public:
     //######################################################
     // -- Canonical Form (ohne öffentlichen Default-Ctor) --
     //######################################################
-    Bureaucrat(const std::string& name, int grade);         // Haupt-Konstruktor
+    Bureaucrat(const std::string& name, int grade);         // Haupt-Konstrktor
     Bureaucrat(Bureaucrat const& other);                   // Copy-Konstruktor
     Bureaucrat& operator=(Bureaucrat const& other);       // Zuweisungsoperator
     ~Bureaucrat();                                       // Destruktor
 
     // -- Getter: nur Leserechte, Wahrung der Kapselung --
-    const std::string& getName() const; // Referenz → kein Kopieren
+    const std::string& getName() const; // Refeenz → kein Kopieren
     int                getGrade() const;
 
     // -- Modifikatoren: halten Invariante [1..150] strikt ein --
@@ -62,8 +57,11 @@ public:
             virtual const char* what() const throw(); // niemals werfen
     };
 
+    // --- ex01: Form unterschreiben versuchen ---
+    void signForm(Form& form) const;
+
 private:
-    // Default-Konstruktor absichtlich verboten (C++98-Stil):
+    // Default-Konstuktor absichtlich verboten (C++98-Stil):
     // nur deklariert, nicht implementiert
     Bureaucrat();
 
