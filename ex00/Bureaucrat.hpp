@@ -59,7 +59,7 @@ public:
     class GradeTooLowException : public std::exception 
     {
         public:
-        const char* what() const throw() override;// niemals werfen
+        const char* what() const throw(); //override;// niemals werfen
     };
 
 private:
